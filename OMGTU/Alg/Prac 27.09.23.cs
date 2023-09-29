@@ -1,4 +1,4 @@
-﻿//
+﻿// Практика за 27.09.23
 
 using System;
 class Program
