@@ -16,7 +16,7 @@ namespace Prac_22._11._23
             int n1 = Convert.ToInt32(Console.ReadLine());
             Console.WriteLine("Введите количество белых мышей, которые должны выжить");
             int m1 = Convert.ToInt32(Console.ReadLine());
-            if (!(n1 > n || m1 > m || n1 == 0 || n == 0 || ((n1 != n) && (m1 != m) && (k == 0)) || ((n1 == n) && (m1 == m) && (k != 0)) || ((n1==n)&&((n+m)%k==0))))
+            if (!(n1 > n || m1 > m || n1 == 0 || n == 0 || ((n1 != n) && (m1 != m) && (k == 0)) || ((n1 == n) && (m1 == m) && (k != 0)) || ((n1 == n) && ((n + m) % k == 0))))
             {
                 int[] all = new int[n + m];
                 int pos = 1;
