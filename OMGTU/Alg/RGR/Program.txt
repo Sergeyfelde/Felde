@@ -1,0 +1,69 @@
+﻿using System;
+
+namespace Determinant
+{
+    internal class Program
+    {
+        static void Main()
+        {
+            Console.WriteLine("Введите ранг квадратной матрицы:");
+            int r = Convert.ToInt32(Console.ReadLine());
+            if (r == 0) Console.WriteLine("Введите ранг матрицы, больше нуля.");
+            else
+            {
+                double[,] matrix = new double[r, r];
+                for (int i = 0; i < r; i++)
+                {
+                    for (int j = 0; j < r; j++)
+                    {
+                        Console.WriteLine($"Введите элемент матрицы на позиции [{i + 1},{j + 1}] :");
+                        matrix[i, j] = Convert.ToDouble(Console.ReadLine());
+                    }
+                }
+                Console.WriteLine("Введённая матрица:");
+                for (int i = 0; i < r; i++)
+                {
+                    for (int j = 0; j < r; j++)
+                    {
+                        Console.Write($"{matrix[i, j]}\t");
+                    }
+                    Console.WriteLine('\r');
+                }
+                Console.WriteLine($"Определитель матрицы равен: {GetDet(matrix)}");
+            }
+        }
+        public static double GetDet(double[,] matrix)
+        {
+            double det = 0;
+            int Rank = matrix.GetLength(0);
+            if (Rank == 1) det = matrix[0, 0];
+            if (Rank == 2) det = matrix[0, 0] * matrix[1, 1] - matrix[0, 1] * matrix[1, 0];
+            if (Rank > 2)
+            {
+                for (int i = 0; i < matrix.GetLength(1); i++)
+                {
+                    det += Math.Pow(-1, 0 + i) * matrix[0, i] * GetDet(GetMinor(matrix, 0, i));
+                }
+            }
+            return det;
+        }
+        public static double[,] GetMinor(double[,] matrix, int sk, int sb)
+        {
+            double[,] Minor = new double[matrix.GetLength(0) - 1, matrix.GetLength(0) - 1];
+            for (int i = 0; i < matrix.GetLength(0); i++)
+            {
+                for (int j = 0; j < matrix.GetLength(1); j++)
+                {
+                    if ((i != sk) || (j != sb))
+                    {
+                        if (i < sk && j < sb) Minor[i, j] = matrix[i, j];
+                        if (i < sk && j > sb) Minor[i, j - 1] = matrix[i, j];
+                        if (i > sk && j < sb) Minor[i - 1, j] = matrix[i, j];
+                        if (i > sk && j > sb) Minor[i - 1, j - 1] = matrix[i, j];
+                    }
+                }
+            }
+            return Minor;
+        }        
+    }
+}
