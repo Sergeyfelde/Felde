@@ -25,7 +25,7 @@ namespace Lab_07._11._23
             fs = new string(ch);
             if (fs == s)
             {
-                Console.WriteLine("Полиндром");
+                Console.WriteLine("Палиндром");
             }    
         }
     }
