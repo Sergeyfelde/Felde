@@ -1,9 +1,10 @@
 //ЛР 16.02.24
-//Array: Count, BinSearch, Copy, Find, FindLast, IndexOf, Reverse, Resize, Sort
+//Array: Length, BinSearch, Copy, Find, FindLast, IndexOf, Reverse, Resize, Sort
 //ArrayList: Count, BinSearch, Copy, IndexOf, Insert, Reverse, Sort, Add
 //SortedList: Add, IndexOf по ключу, по значению, Вывод ключа по индексу, Вывод значения по индексу
 using System;
 using System.Collections;
+using System.Runtime.InteropServices;
 
 namespace Lab_16_02_24
 {
@@ -29,13 +30,14 @@ namespace Lab_16_02_24
                     Console.WriteLine("Введите количество элементов");
                     int n_ar = Convert.ToInt32(Console.ReadLine());
                     if (n_ar == 0) { Console.WriteLine("Пустой array, введите данные заново"); continue; }
-                    int[] ar = new int[n_ar];
+                    Array ara = Array.CreateInstance(typeof(int),n_ar);
                     Console.WriteLine("Введите элементы");
-                    for (int j = 0; j < n_ar; j++) { Console.Write($"[{j}]: "); ar[j] = Convert.ToInt32(Console.ReadLine()); }
+                    for (int j = 0; j < n_ar; j++) { Console.Write($"[{j}]: "); ara.SetValue(Convert.ToInt32(Console.ReadLine()), j); }
+                    int[] ar = (int[])ara;
                     while (!end_of_col)
                     {
                         Console.WriteLine("Выберите действие");
-                        Console.WriteLine("1) Count");
+                        Console.WriteLine("1) Length");
                         Console.WriteLine("2) BinSearch (только для сортированного array)");
                         Console.WriteLine("3) Copy");
                         Console.WriteLine("4) Find");
@@ -48,7 +50,7 @@ namespace Lab_16_02_24
                         int ar_a = Convert.ToInt32(Console.ReadLine());
                         switch (ar_a)
                         {
-                            case 1: Console.WriteLine($"Количество элементов: {ar.Count()}"); break;
+                            case 1: Console.WriteLine($"Количество элементов: {ar.Length}"); break;
                             case 2:
                                 Console.WriteLine("Введите элемент, который необходимо найти");
                                 int ar_bs = Convert.ToInt32(Console.ReadLine());
@@ -57,7 +59,7 @@ namespace Lab_16_02_24
                             case 3:
                                 Console.WriteLine($"Введите индекс элемента, с которого необходимо начать копировать элементы ");
                                 int s_arc = Convert.ToInt32(Console.ReadLine());
-                                Console.WriteLine($"Введите число элементов, которое необходимо скопировать в новый array (не больше {n_ar - s_arc})");
+                                Console.WriteLine($"Введите число элементов, которое необходимо скопировать в новый array (не больше {ar.Length - s_arc})");
                                 int n_arc = Convert.ToInt32(Console.ReadLine());
                                 int[] arc = new int[n_arc];
                                 Array.Copy(ar, s_arc, arc, 0, n_arc);
@@ -78,7 +80,8 @@ namespace Lab_16_02_24
                             case 6:
                                 Console.WriteLine("Введите значение элемента array");
                                 int ar_t = Convert.ToInt32(Console.ReadLine());
-                                Console.WriteLine($"Индекс элемента в array: {Array.IndexOf(ar, ar_t)}");
+                                if (Array.IndexOf(ar, ar_t) < 0) Console.WriteLine("Элемент не найден");
+                                else Console.WriteLine($"Индекс элемента в array: {Array.IndexOf(ar, ar_t)}");
                                 break;
                             case 7:
                                 Console.WriteLine("Обратный array: ");
@@ -89,7 +92,7 @@ namespace Lab_16_02_24
                             case 8:
                                 Console.WriteLine("Введите новый размер array: ");
                                 int ar_size = Convert.ToInt32(Console.ReadLine());
-                                Array.Resize(ref ar, ar_size);
+                                Array.Resize<int>(ref ar, ar_size);
                                 i = 0;
                                 foreach (int p in ar) { Console.WriteLine($"[{i}]: {p}"); i++; }
                                 break;
@@ -137,7 +140,7 @@ namespace Lab_16_02_24
                             case 3:
                                 Console.WriteLine($"Введите индекс элемента, с которого необходимо начать копировать элементы ");
                                 int s_arlc = Convert.ToInt32(Console.ReadLine());
-                                Console.WriteLine($"Введите число элементов, которое необходимо скопировать в новый array (не больше {n_arl - s_arlc})");
+                                Console.WriteLine($"Введите число элементов, которое необходимо скопировать в новый array (не больше {arl.Count - s_arlc})");
                                 int n_arlc = Convert.ToInt32(Console.ReadLine());
                                 int[] arlc = new int[n_arlc];
                                 arl.CopyTo(s_arlc, arlc, 0, n_arlc);
