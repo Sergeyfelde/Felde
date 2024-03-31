@@ -1,0 +1,74 @@
+//Польская запись
+using System;
+
+namespace LAB_20_02_24_Polskaya_zapic
+{
+    internal class Program
+    {
+        static void Main()
+        {
+            string arg;
+            string[] ar = new string[2];
+            Stack<double> st = new Stack<double>();
+            int num_c = 0;
+            bool num_minus = false;
+            bool isfirst = true;
+            Console.WriteLine("Введите число");
+            while ((arg = Console.ReadLine()) != "exit")
+            {
+                double num;
+                bool isNum = double.TryParse(arg, out num);
+
+                if (num_minus) { if (isfirst) { num_c -= 2; num_minus = false; isfirst = false; } else { num_c -= 1; num_minus = false; } }
+                if (isNum)
+                {
+                    st.Push(num);
+                    num_c += 1;
+                }
+                else
+                {
+                    if (arg == "calc")
+                    {
+                        num_c = 0;
+                        isfirst = true;
+                        Console.WriteLine("Результат: " + st.Pop());
+                    }
+                    else if ((num_c == 2 && isfirst) || ((isfirst == false) && num_c == 1))
+                    {
+                        double op2;
+                        switch (arg)
+                        {
+                            case "+":
+                                st.Push(st.Pop() + st.Pop());
+                                num_minus = true;
+                                break;
+                            case "*":
+                                st.Push(st.Pop() * st.Pop());
+                                num_minus = true;
+                                break;
+                            case "-":
+                                op2 = st.Pop();
+                                st.Push(st.Pop() - op2);
+                                num_minus = true;
+                                break;
+                            case "/":
+                                op2 = st.Pop();
+                                if (op2 != 0.0)
+                                    st.Push(st.Pop() / op2);
+                                else
+                                    throw new Exception("Ошибка. Деление на ноль");
+                                num_minus = true;
+                                break;
+                            default:
+                                Console.WriteLine("Ошибка. Неизвестная команда");
+                                break;
+                        }
+                    }
+                    else if (num_c <= 1) throw new Exception("Недостаточно элементов для выполнения действия!");
+                    else throw new Exception("Недостаточно операций для выполнения действия!");
+                }
+                Console.WriteLine("Введите число или знак операции или 'calc' для вывода ответа");
+            }
+        }
+    }
+}
