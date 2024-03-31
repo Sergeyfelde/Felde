@@ -1,0 +1,48 @@
+//Скобки
+namespace LAB_20_02_24_Stack_Skobki
+{
+    internal class Program
+    {
+        static void Main()
+        {
+            var d_s = new Dictionary<char, char>()
+            {
+                { ')', '(' },
+                { ']', '[' },
+                { '}', '{' }
+            };
+            Console.WriteLine("Введите скобочное выражение: ");
+            string str = Console.ReadLine();
+            bool ok = true;
+            var stack = new Stack<char>();
+            foreach (char str_s in str)
+            {
+                if (str_s == '(' || str_s == '[' || str_s == '{')
+                    stack.Push(str_s);
+                else
+                {
+                    if (stack.Count != 0)
+                    {
+                        if (d_s[str_s] == stack.Peek())
+                            stack.Pop();
+                        else
+                        {
+                            ok = false;
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        ok = false;
+                        break;
+                    }
+                }
+            }
+            if (stack.Count != 0) ok = false;
+            if (ok)
+                Console.WriteLine("Верно");
+            else
+                Console.WriteLine("Неверно");
+        }
+    }
+}
