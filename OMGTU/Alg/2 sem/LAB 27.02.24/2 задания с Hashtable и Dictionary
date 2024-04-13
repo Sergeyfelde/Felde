@@ -1,0 +1,63 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+
+namespace LAB_27_02_24_Hash_Dict
+{
+    internal class Program
+    {
+        static void Main()
+        {
+            Console.WriteLine("Введите данные в формате: номер_телефона дата_разговора время_начала_разговора количество_минут \nДля завершения ввода данных введите end");
+            Queue queue = new Queue();
+            Dictionary<string, int> tel_dct = new Dictionary<string, int>();
+            Hashtable tel_ht = new Hashtable();
+            Dictionary<string, int> date_dct = new Dictionary<string, int>();
+            Hashtable date_ht = new Hashtable();
+            string input = Console.ReadLine();
+            while (input != "end")
+            {
+                queue.Enqueue(input);
+                input = Console.ReadLine();
+            }
+            int n = queue.Count;
+            for (int i = 0; i < n; i++)
+            {
+                string[] call = queue.Dequeue().ToString().Split(' ');
+                string number = call[0];
+                string date = call[1];
+                string time_st = call[2];
+                string minutes = call[3];
+                if (tel_dct.ContainsKey(number))
+                    tel_dct[number] += Convert.ToInt32(minutes);
+                else
+                    tel_dct.Add(number, Convert.ToInt32(minutes));
+                if (tel_ht.ContainsKey(number))
+                    tel_ht[number] = Convert.ToInt32(tel_ht[number]) + Convert.ToInt32(minutes);
+                else
+                    tel_ht.Add(number, Convert.ToInt32(minutes));
+                if (date_dct.ContainsKey(date))
+                    date_dct[date] += Convert.ToInt32(minutes);
+                else
+                    date_dct.Add(date, Convert.ToInt32(minutes));
+                if (date_ht.ContainsKey(date))
+                    date_ht[date] = Convert.ToInt32(date_ht[date]) + Convert.ToInt32(minutes);
+                else
+                    date_ht.Add(date, Convert.ToInt32(minutes));
+            }
+            Console.WriteLine("1 задание\nСловарь:\nНомер телефона\tКоличество минут");
+            foreach (string key in tel_dct.Keys)
+                Console.WriteLine($"{key}\t\t{tel_dct[key]}");
+            Console.WriteLine("Хеш-таблица:\nНомер телефона\tКоличество минут");
+            foreach (string key in tel_ht.Keys)
+                Console.WriteLine($"{key}\t\t{tel_ht[key]}");
+            Console.WriteLine("2 задание\nСловарь:\nДата\t\tКоличество минут");
+            foreach (string key in date_dct.Keys)
+                Console.WriteLine($"{key}\t{date_dct[key]}");
+            Console.WriteLine("Хеш-таблица:\nДата\t\tКоличество минут");
+            foreach (string key in date_ht.Keys)
+                Console.WriteLine($"{key}\t{date_ht[key]}");
+            Console.ReadLine();
+        }
+    }
+}
