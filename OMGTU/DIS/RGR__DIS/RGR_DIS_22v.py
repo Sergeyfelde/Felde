@@ -20,8 +20,9 @@ def Alg():
         return lst
     with open('rgr_test.txt') as f:
         try:
-            N = int(f.readline())
-            M = int(f.readline())
+            N_M = [int(x) for x in f.readline().split()]
+            N = N_M[0]
+            M = N_M[1]
         except ValueError:
             output = 'Неправильный ввод'
             return output
