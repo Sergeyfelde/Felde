@@ -1,3 +1,4 @@
+#Выполнено с Денисом Шелеповым
 with open('Files/commi_data.txt') as f:
     f_data = f.read().splitlines()
     
